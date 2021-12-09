@@ -1,0 +1,1 @@
+export const ADD_CURRENT_USER = "ADD_CURRENT_USER";
