@@ -37,4 +37,7 @@
   --icon-grey: rgba(0, 0, 0, 0.6);
   --border-grey: rgba(0, 0, 0, 0.08);
   --search-bar: rgb(240, 242, 245);
+  --search-bar-hover: rgb(228, 230, 233);
+  --blue-text: rgb(33, 111, 219);
+  --nav-dropdown-text: #050505;
 }

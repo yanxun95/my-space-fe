@@ -1,9 +1,10 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import TopNavbar from "./Components/TopNavbar";
+import TopNavbar from "./components/TopNavbar.jsx";
 import { useState, useEffect } from "react";
-import UserProfile from "./Components/UserProfile.jsx";
+import UserProfile from "./components/UserProfile.jsx";
+import CustomiseLayout from "./components/CustomiseLayout.jsx";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -11,13 +12,11 @@ function App() {
   const getCurrentUser = async () => {
     try {
       const response = await fetch(
-        process.env.REACT_APP_BE_URL + "/user/61b0a4ad35d83a01f09db0bb"
+        process.env.REACT_APP_BE_URL + "/user/61bc9af98a6d7cb5eff156ee"
       );
       if (response.ok) {
         let result = await response.json();
-        console.log(result);
         setCurrentUser(result);
-        console.log("current user:", currentUser);
       } else {
         console.log("Error");
       }
@@ -32,9 +31,23 @@ function App() {
 
   return (
     <>
-      <Router>
-        <TopNavbar currentUser={currentUser} />
-      </Router>
+      {currentUser !== null && (
+        <Router>
+          <TopNavbar currentUser={currentUser} />
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => <UserProfile currentUser={currentUser} />}
+            />
+            <Route
+              path="/customiseLayout/"
+              exact
+              render={() => <CustomiseLayout currentUser={currentUser} />}
+            />
+          </Switch>
+        </Router>
+      )}
     </>
   );
 }

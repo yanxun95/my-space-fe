@@ -1,0 +1,69 @@
+.user-photos-main-container {
+  width: 23.75rem;
+  border: 1px solid var(--border-grey);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.user-photos-fcontainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-photos-fcontainer span:first-child {
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.user-photos-fcontainer span:first-child:hover,
+.user-photos-fcontainer span:nth-child(2):hover {
+  text-decoration: underline;
+}
+
+.user-photos-fcontainer span:nth-child(2) {
+  color: var(--blue-text);
+}
+
+.user-photos-scontainer {
+  width: 100%;
+}
+
+.user-photos-clist {
+  width: 100%;
+  height: 100%;
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-photos-list {
+  width: 110px;
+  height: 110px;
+}
+
+.up-photo-tleft {
+  border-top-left-radius: 0.5rem;
+}
+.up-photo-tright {
+  border-top-right-radius: 0.5rem;
+}
+.up-photo-bleft {
+  border-bottom-left-radius: 0.5rem;
+}
+.up-photo-bright {
+  border-bottom-right-radius: 0.5rem;
+}
+
+.user-friend-border-ar {
+  border-radius: 0.5rem;
+}
+
+.user-friends-info {
+  display: flex;
+  flex-direction: column;
+}

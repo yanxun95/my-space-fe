@@ -1,4 +1,5 @@
-import "../Css/topNavbar.css";
+import "../css/topNavbar.css";
+import "../css/userProfile.css";
 import { MdWorkspacesOutline } from "react-icons/md";
 import { BiSearch } from "react-icons/bi";
 import { Form } from "react-bootstrap";
@@ -6,54 +7,101 @@ import {
   MdArrowDropDownCircle,
   MdOutlineArrowDropDownCircle,
 } from "react-icons/md";
+import { RiSettings5Fill } from "react-icons/ri";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const TopNavbar = ({ currentUser }) => {
-  return (
-    <>
-      {currentUser !== null && (
-        <div className="top-navbar">
-          <div className="top-navbar-left">
-            <div>
-              <MdWorkspacesOutline className="logo" />
-            </div>
+  const [dropdown, setDropdown] = useState(false);
 
-            <div className="search-bar">
-              <BiSearch />
-              <Form>
-                <Form.Group
-                  className="d-flex"
-                  style={{ alignItems: "center" }}
-                  controlId="searchBar"
-                >
-                  <Form.Control
-                    type="search"
-                    placeholder="Search"
-                    className="search-field"
-                  />
-                </Form.Group>
-              </Form>
-            </div>
+  const btnDropdown = () => {
+    setDropdown(false);
+    if (dropdown === false) {
+      const btnDropdown = document.querySelector(".btn-dw-customise");
+      btnDropdown.classList.add("btn-dropdown-display");
+      setDropdown(!dropdown);
+    } else {
+      const btnDropdown = document.querySelector(".btn-dw-customise");
+      btnDropdown.classList.remove("btn-dropdown-display");
+      setDropdown(!dropdown);
+    }
+  };
+
+  return (
+    <div className="top-navbar">
+      <div className="top-navbar-left">
+        <div>
+          <Link to={`/`}>
+            <MdWorkspacesOutline className="logo" />
+          </Link>
+        </div>
+
+        <div className="search-bar">
+          <BiSearch />
+          <Form>
+            <Form.Group
+              className="d-flex"
+              style={{ alignItems: "center" }}
+              controlId="searchBar"
+            >
+              <Form.Control
+                type="search"
+                placeholder="Search"
+                className="search-field"
+              />
+            </Form.Group>
+          </Form>
+        </div>
+      </div>
+      <div className="top-navbar-right">
+        <div className="profile-info">
+          <div className="profile-img-container">
+            <img
+              src={currentUser.userImage}
+              className="profile-img"
+              alt=""
+            ></img>
           </div>
-          <div className="top-navbar-right">
-            <div className="profile-info">
-              <div className="profile-img-container">
-                <img
-                  src={currentUser.image}
-                  className="profile-img"
-                  alt=""
-                ></img>
-              </div>
-              <div className="profile-name">
-                {currentUser.name + " " + currentUser.surname}
-              </div>
-            </div>
-            <div>
-              <MdOutlineArrowDropDownCircle className="btn-dropdown" />
-            </div>
+          <div className="profile-name">
+            {currentUser.name + " " + currentUser.surname}
           </div>
         </div>
-      )}
-    </>
+        <div className="btn-dropdown-container">
+          <MdOutlineArrowDropDownCircle
+            className="btn-dropdown"
+            onClick={() => btnDropdown()}
+          />
+          <div className="btn-dw-customise">
+            <div className="btn-dw-user-profile">
+              <div>
+                <img
+                  src={currentUser.userImage}
+                  className="btn-dw-profile-img"
+                  alt=""
+                />
+              </div>
+              <div className="btn-dw-profile-info">
+                <div className="btn-dw-profile-name">
+                  {currentUser.name + " " + currentUser.surname}
+                </div>
+                <div className="btn-dw-profile-see-profile">
+                  See your profile
+                </div>
+              </div>
+            </div>
+            <hr className="btn-dw-hr"></hr>
+            <Link to={`/customiseLayout/`}>
+              <div className="btn-dw-list">
+                <div className="btn-dw-list-icon-container">
+                  <RiSettings5Fill className="btn-dw-list-icon" />
+                </div>
+                <div className="btn-dw-list-text">Customise profile</div>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

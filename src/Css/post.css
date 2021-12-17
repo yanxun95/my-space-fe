@@ -1,0 +1,112 @@
+.post-container {
+  width: 687px;
+  border: 1px solid var(--border-grey);
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.post-user-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid var(--border-grey);
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.post-user-image:hover {
+  opacity: 0.8;
+}
+
+.post-fcontainer {
+  justify-content: space-between;
+  display: flex;
+  padding: 1rem 1rem 0rem;
+}
+
+.post-user-info-container {
+  display: flex;
+  align-items: center;
+}
+
+.post-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-username,
+.post-time {
+  cursor: pointer;
+}
+
+.post-username:hover,
+.post-time:hover {
+  text-decoration: underline;
+}
+
+.post-username {
+  font-weight: 600;
+}
+
+.post-time {
+  font-size: 0.8rem;
+}
+
+.post-edit {
+  font-size: 1.25rem;
+}
+
+.post-scontainer {
+  margin-top: 0.5rem;
+  padding: 0rem 1rem 0.5rem;
+}
+
+.post-3container {
+  width: 685px;
+  max-height: 40rem;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0.5rem 0rem;
+}
+
+.post-img {
+  width: inherit;
+  object-fit: contain;
+  max-height: inherit;
+}
+
+.post-4container {
+  padding: 0rem 1rem;
+}
+
+.post-icon-size {
+  font-size: 1.25rem;
+  margin-right: 0.25rem;
+}
+
+.post-button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.post-function-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid var(--border-grey);
+  margin-top: 0.5rem;
+  padding-top: 0.2rem;
+}
+
+.post-function-bar > div {
+  padding: 0.5rem 4.5rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.post-function-bar > div:hover {
+  background-color: var(--border-grey);
+}
