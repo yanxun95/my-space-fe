@@ -65,7 +65,7 @@
 
 .post-3container {
   width: 685px;
-  max-height: 40rem;
+  height: 25rem;
   display: flex;
   justify-content: center;
   cursor: pointer;
@@ -79,7 +79,7 @@
 }
 
 .post-4container {
-  padding: 0rem 1rem;
+  padding: 0rem 1rem 0.2rem;
 }
 
 .post-icon-size {

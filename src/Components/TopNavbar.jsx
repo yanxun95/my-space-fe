@@ -9,10 +9,11 @@ import {
 } from "react-icons/md";
 import { RiSettings5Fill } from "react-icons/ri";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const TopNavbar = ({ currentUser }) => {
   const [dropdown, setDropdown] = useState(false);
+  const history = useHistory();
 
   const btnDropdown = () => {
     setDropdown(false);
@@ -27,11 +28,14 @@ const TopNavbar = ({ currentUser }) => {
     }
   };
 
+  const btnProfileImg = () => {
+    history.push("/user?id=" + currentUser._id);
+  };
   return (
     <div className="top-navbar">
       <div className="top-navbar-left">
         <div>
-          <Link to={`/`}>
+          <Link to={`/user?id=${currentUser._id}`}>
             <MdWorkspacesOutline className="logo" />
           </Link>
         </div>
@@ -54,7 +58,7 @@ const TopNavbar = ({ currentUser }) => {
         </div>
       </div>
       <div className="top-navbar-right">
-        <div className="profile-info">
+        <div className="profile-info" onClick={() => btnProfileImg()}>
           <div className="profile-img-container">
             <img
               src={currentUser.userImage}

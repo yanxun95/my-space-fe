@@ -39,5 +39,8 @@
   --search-bar: rgb(240, 242, 245);
   --search-bar-hover: rgb(228, 230, 233);
   --blue-text: rgb(33, 111, 219);
+  --logo-blue: #0a66c2;
   --nav-dropdown-text: #050505;
+  --btn-login: #0a66c2;
+  --btn-login-hover: #004182;
 }

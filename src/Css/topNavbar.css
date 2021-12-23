@@ -33,6 +33,7 @@
   width: 2.25rem;
   height: 2.25rem;
   cursor: pointer;
+  color: var(--logo-blue);
 }
 
 .search-bar {
@@ -125,6 +126,7 @@
 
 .btn-dw-profile-img {
   width: 3.75rem;
+  height: 3.75rem;
   border: 1px solid var(--border-grey);
   border-radius: 50%;
   margin-right: 0.5rem;
