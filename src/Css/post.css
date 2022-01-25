@@ -61,6 +61,11 @@
 .post-scontainer {
   margin-top: 0.5rem;
   padding: 0rem 1rem 0.5rem;
+  width: inherit;
+  /* white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; */
+  cursor: pointer;
 }
 
 .post-3container {

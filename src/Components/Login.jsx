@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { Form } from "react-bootstrap";
-import { GiConsoleController } from "react-icons/gi";
 import "../css/login.css";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userLogin, setPosition } from "../actions";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({});
+  const dispatch = useDispatch();
   const history = useHistory();
-  const login = async () => {
+
+  const btnUserLogin = async () => {
     try {
       let response = await fetch(process.env.REACT_APP_BE_URL + "/user/login", {
         method: "POST",
@@ -19,8 +22,8 @@ const Login = () => {
       });
       if (response.ok) {
         let result = await response.json();
-        history.push("/user?id=" + result._id);
-        console.log(result);
+        history.push("/user/" + result._id);
+        dispatch(userLogin(result));
       } else if (response.status === 401) {
         alert("Email or password is not correct!");
       } else {
@@ -30,6 +33,38 @@ const Login = () => {
       console.log(error);
     }
   };
+
+  // const loadPosition = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       process.env.REACT_APP_BE_URL + "/customise/" + currentUser._id,
+  //       {
+  //         headers: {
+  //           Authorization: "Bearer " + accessToken,
+  //         },
+  //       }
+  //     );
+  //     if (response.ok) {
+  //       let result = await response.json();
+  //       console.log(result[0]);
+  //       let posObj = {
+  //         _id: result[0]._id,
+  //         userId: result[0].userId,
+  //         mainPosition: result[0].mainPosition,
+  //         postPosition: result[0].postPosition,
+  //         userInfo: result[0].userInfo,
+  //         userBgImage: result[0].userBgImage,
+  //       };
+  //       dispatch(setPosition(posObj));
+  //     } else {
+  //       console.log("Error");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const userSignUp = () => {};
 
   return (
     <div className="login-main-container">
@@ -59,8 +94,15 @@ const Login = () => {
               }
             />
           </Form.Group>
-          <div className="btn-login" type="submit" onClick={() => login()}>
+          <div
+            className="btn-login"
+            type="submit"
+            onClick={() => btnUserLogin()}
+          >
             Login
+          </div>
+          <div className="btn-login" type="button" onClick={() => userSignUp()}>
+            Create new account
           </div>
         </Form>
       </div>

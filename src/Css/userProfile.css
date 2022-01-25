@@ -81,5 +81,12 @@
   text-decoration: underline;
 }
 
-.up-user-edit {
+.up-left-container {
+  min-width: 23.75rem;
+  width: auto;
+}
+
+.up-right-container {
+  min-width: 23.75rem;
+  width: auto;
 }
