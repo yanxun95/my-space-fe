@@ -8,12 +8,14 @@ import {
   MdOutlineArrowDropDownCircle,
 } from "react-icons/md";
 import { RiSettings5Fill } from "react-icons/ri";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const TopNavbar = ({ currentUser }) => {
+const TopNavbar = () => {
   const [dropdown, setDropdown] = useState(false);
   const history = useHistory();
+  const currentUser = useSelector((state) => state.user.userInfo);
 
   const btnDropdown = () => {
     setDropdown(false);
@@ -29,13 +31,13 @@ const TopNavbar = ({ currentUser }) => {
   };
 
   const btnProfileImg = () => {
-    history.push("/user?id=" + currentUser._id);
+    history.push("/user/" + currentUser._id);
   };
   return (
     <div className="top-navbar">
       <div className="top-navbar-left">
         <div>
-          <Link to={`/user?id=${currentUser._id}`}>
+          <Link to={`/user/${currentUser._id}`}>
             <MdWorkspacesOutline className="logo" />
           </Link>
         </div>
@@ -76,7 +78,10 @@ const TopNavbar = ({ currentUser }) => {
             onClick={() => btnDropdown()}
           />
           <div className="btn-dw-customise">
-            <div className="btn-dw-user-profile">
+            <div
+              className="btn-dw-user-profile"
+              onClick={() => btnProfileImg()}
+            >
               <div>
                 <img
                   src={currentUser.userImage}
