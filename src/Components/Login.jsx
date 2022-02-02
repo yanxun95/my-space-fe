@@ -3,7 +3,7 @@ import { Form } from "react-bootstrap";
 import "../css/login.css";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { userLogin, setPosition } from "../actions";
+import { userLogin } from "../actions";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({});
@@ -33,36 +33,6 @@ const Login = () => {
       console.log(error);
     }
   };
-
-  // const loadPosition = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       process.env.REACT_APP_BE_URL + "/customise/" + currentUser._id,
-  //       {
-  //         headers: {
-  //           Authorization: "Bearer " + accessToken,
-  //         },
-  //       }
-  //     );
-  //     if (response.ok) {
-  //       let result = await response.json();
-  //       console.log(result[0]);
-  //       let posObj = {
-  //         _id: result[0]._id,
-  //         userId: result[0].userId,
-  //         mainPosition: result[0].mainPosition,
-  //         postPosition: result[0].postPosition,
-  //         userInfo: result[0].userInfo,
-  //         userBgImage: result[0].userBgImage,
-  //       };
-  //       dispatch(setPosition(posObj));
-  //     } else {
-  //       console.log("Error");
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const userSignUp = () => {};
 

@@ -27,7 +27,7 @@ const CustomiseLayout = () => {
   const [accessToken, setAccessToken] = useState(" ");
   const currentUser = useSelector((state) => state.user.userInfo);
   const getUpdatePosition = useSelector((state) => state.user.position);
-  const [posts, setPosts] = useState({});
+  const [post, setPost] = useState(null);
   const emptyPosition = {
     _id: getUpdatePosition._id,
     userId: getUpdatePosition.userId,
@@ -40,12 +40,7 @@ const CustomiseLayout = () => {
   const loadPosition = async () => {
     try {
       const response = await fetch(
-        process.env.REACT_APP_BE_URL + "/customise/" + currentUser._id,
-        {
-          headers: {
-            Authorization: "Bearer " + accessToken,
-          },
-        }
+        process.env.REACT_APP_BE_URL + "/customise/" + currentUser._id
       );
       if (response.ok) {
         let result = await response.json();
@@ -58,7 +53,6 @@ const CustomiseLayout = () => {
           userBgImage: result[0].userBgImage,
         };
         dispatch(setPosition(posObj));
-        console.log(getUpdatePosition);
       } else {
         console.log("Error");
       }
@@ -74,7 +68,7 @@ const CustomiseLayout = () => {
       );
       if (response.ok) {
         let result = await response.json();
-        setPosts(result[0]);
+        setPost(result[0]);
       } else {
         console.log("Error");
       }
@@ -156,12 +150,12 @@ const CustomiseLayout = () => {
       group: "mainContainer",
       store: {
         get: function (sortable) {
-          var order = getUpdatePosition.mainPosition;
+          let order = getUpdatePosition.mainPosition;
           return order ? order.split("|") : [];
         },
 
         set: function (sortable) {
-          var order = sortable.toArray();
+          let order = sortable.toArray();
           dispatch(updateMainPosition(order.join("|")));
         },
       },
@@ -171,12 +165,12 @@ const CustomiseLayout = () => {
       group: "postContainer",
       store: {
         get: function (sortable) {
-          var order = getUpdatePosition.postPosition;
+          let order = getUpdatePosition.postPosition;
           return order ? order.split("|") : [];
         },
 
         set: function (sortable) {
-          var order = sortable.toArray();
+          let order = sortable.toArray();
           dispatch(updatePostPosition(order.join("|")));
         },
       },
@@ -198,18 +192,21 @@ const CustomiseLayout = () => {
   }, [accessToken]);
 
   useEffect(() => {
-    createUserInfoDrag();
-    createDrag();
+    if (post !== null && getUpdatePosition.mainPosition !== undefined) {
+      createUserInfoDrag();
+      createDrag();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [post, getUpdatePosition]);
 
   useEffect(() => {
     getPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      {getComputedStyle !== null && (
+      {getUpdatePosition !== {} && (
         <>
           <TopNavbar />
           <div className="cy-main-container">
@@ -244,111 +241,66 @@ const CustomiseLayout = () => {
             <div className="up-second-container">
               <div className="up-left-container">
                 <div>
-                  <UserInfo currentUser={currentUser} />
-                  <UserPhotos currentUser={currentUser} />
-                  <UserFriends currentUser={currentUser} />
+                  <UserInfo user={currentUser} />
+                  <UserPhotos user={currentUser} />
+                  <UserFriends user={currentUser} />
                 </div>
               </div>
               <div className="up-right-container">
-                <div>
-                  <NewPost currentUser={currentUser} />
-                  <div id="postContainer" className="post-container">
-                    <div className="post-fcontainer">
-                      <div className="post-user-info-container">
-                        <img
-                          src="https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
-                          alt=""
-                          className="post-user-image-customise"
-                        />
-                        <div className="post-user-info">
-                          <span className="post-username-customise">
-                            Username
-                          </span>
-                          <span className="post-time-customise">Post date</span>
+                {post !== null && (
+                  <div>
+                    <NewPost user={currentUser} />
+                    <div id="postContainer" className="post-container">
+                      <div className="post-fcontainer">
+                        <div className="post-user-info-container">
+                          <img
+                            src={currentUser.userImage}
+                            alt=""
+                            className="post-user-image"
+                          />
+
+                          <div className="post-user-info">
+                            <span className="post-username-customise">
+                              {currentUser.name + " " + currentUser.surname}
+                            </span>
+                            <span className="post-time-customise">
+                              {post.createdAt.split("T")[0]}
+                            </span>
+                          </div>
                         </div>
+                        <BsThreeDots className="post-edit" />
                       </div>
-                      <BsThreeDots className="post-edit" />
-                    </div>
-                    <div className="post-scontainer">
-                      <span>Content</span>
-                    </div>
-                    <div className="post-3container">
-                      <img
-                        src="https://res.cloudinary.com/dobdsx6ge/image/upload/v1639750640/MySpacePost/dkgh20aqosaxwbpbrav1.png"
-                        alt=""
-                        className="post-img"
-                      />
-                    </div>
-                    <div className="post-4container">
-                      <div className="post-button-customise">
-                        <AiOutlineLike className="post-icon-size" />
-                        <span>Number of likes</span>
+                      <div className="post-scontainer">
+                        <span>{post.content}</span>
                       </div>
-                      <div className="post-function-bar-customise">
+                      <div className="post-3container">
+                        <img src={post.img} alt="" className="post-img" />
+                      </div>
+                      <div className="post-4container">
                         <div className="post-button-customise">
                           <AiOutlineLike className="post-icon-size" />
-                          <span>Like</span>
+                          <span>{post.likes}</span>
                         </div>
-                        <div className="post-button-customise">
-                          <GoComment className="post-icon-size" />
-                          <span>Comment</span>
-                        </div>
-                        <div className="post-button-customise">
-                          <RiShareForwardLine className="post-icon-size" />
-                          <span>Share</span>
+                        <div className="post-function-bar-customise">
+                          <div className="post-button-customise">
+                            <AiOutlineLike className="post-icon-size" />
+                            <span>Like</span>
+                          </div>
+                          <div className="post-button-customise">
+                            <GoComment className="post-icon-size" />
+                            <span>Comment</span>
+                          </div>
+                          <div className="post-button-customise">
+                            <RiShareForwardLine className="post-icon-size" />
+                            <span>Share</span>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
-            {/* <div id="postContainer" className="post-container">
-              <div className="post-fcontainer post-fcustomise">
-                <div className="post-user-info-container">
-                  <img
-                    src="https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
-                    alt=""
-                    className="post-user-image-customise"
-                  />
-                  <div className="post-user-info">
-                    <span className="post-username-customise">Username</span>
-                    <span className="post-time-customise">Post date</span>
-                  </div>
-                </div>
-                <BsThreeDots className="post-edit" />
-              </div>
-              <div className="post-scontainer post-scustomise">
-                <span>Content</span>
-              </div>
-              <div className="post-3container post-3customise">
-                <img
-                  src="https://res.cloudinary.com/dobdsx6ge/image/upload/v1639750640/MySpacePost/dkgh20aqosaxwbpbrav1.png"
-                  alt=""
-                  className="post-img"
-                />
-              </div>
-              <div className="post-4container post-4customise">
-                <div className="post-button-customise">
-                  <AiOutlineLike className="post-icon-size" />
-                  <span>Number of likes</span>
-                </div>
-                <div className="post-function-bar-customise">
-                  <div className="post-button-customise">
-                    <AiOutlineLike className="post-icon-size" />
-                    <span>Like</span>
-                  </div>
-                  <div className="post-button-customise">
-                    <GoComment className="post-icon-size" />
-                    <span>Comment</span>
-                  </div>
-                  <div className="post-button-customise">
-                    <RiShareForwardLine className="post-icon-size" />
-                    <span>Share</span>
-                  </div>
-                </div>
-              </div>
-            </div> */}
             <div className="cy-btn-save" onClick={() => savePosition()}>
               Save
             </div>

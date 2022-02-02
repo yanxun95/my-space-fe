@@ -2,15 +2,11 @@ import "../css/newPost.css";
 import { MdInsertPhoto } from "react-icons/md";
 import { IoVideocam } from "react-icons/io5";
 
-const NewPost = ({ currentUser }) => {
+const NewPost = ({ user }) => {
   return (
     <div className="new-post-container">
       <div className="new-post-fcontainer">
-        <img
-          src={currentUser.userImage}
-          alt=""
-          className="new-post-user-image"
-        />
+        <img src={user.userImage} alt="" className="new-post-user-image" />
         <div className="new-post">Write a post</div>
       </div>
       <div className="new-post-scontainer">

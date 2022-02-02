@@ -11,28 +11,22 @@ import { useSelector } from "react-redux";
 import Sortable from "sortablejs";
 
 const UserProfile = () => {
-  const [posts, setPosts] = useState([]);
-  const currentUser = useSelector((state) => state.user.userInfo);
-  const [position, setPosition] = useState({});
-  const [accessToken, setAccessToken] = useState(" ");
   const { id } = useParams();
+  const currentUser = useSelector((state) => state.user.userInfo);
+  const [user, setUser] = useState({});
+  const [posts, setPosts] = useState([]);
+  const [position, setPosition] = useState({});
+  const [accessToken, setAccessToken] = useState(1);
 
   const loadPosition = async () => {
     try {
       const response = await fetch(
-        process.env.REACT_APP_BE_URL + "/customise/" + id,
-        {
-          headers: {
-            Authorization: "Bearer " + accessToken,
-          },
-        }
+        process.env.REACT_APP_BE_URL + "/customise/" + id
       );
       if (response.ok) {
         let result = await response.json();
-        console.log("resutl", result);
         setPosition(result[0]);
-        console.log("resut2", position);
-        createDrag();
+        // getPossition();
       } else {
         console.log("Error");
       }
@@ -63,26 +57,36 @@ const UserProfile = () => {
     }
   };
 
-  const createDrag = () => {
-    console.log("order:", position);
+  const getPossition = () => {
     let mainContainer = document.querySelector(".up-second-container");
-    Sortable.create(mainContainer, {
+    let sortable = Sortable.create(mainContainer, {
       group: "mainContainer",
       store: {
         get: function (sortable) {
           var order = position.mainPosition;
-
           return order ? order.split("|") : [];
         },
       },
     });
-    // var state = sortable.option("disabled");
+    let state = sortable.option("disabled");
+    sortable.option("disabled", !state);
   };
 
-  useEffect(() => {
-    getPosts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const loadUserProfile = async () => {
+    try {
+      const response = await fetch(
+        process.env.REACT_APP_BE_URL + "/user/" + id
+      );
+      if (response.ok) {
+        let result = await response.json();
+        setUser(result);
+      } else {
+        console.log("Error");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     getToken();
@@ -92,33 +96,46 @@ const UserProfile = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
 
+  useEffect(() => {
+    loadPosition();
+    loadUserProfile();
+    getPossition();
+    getPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
+  useEffect(() => {
+    position.mainPosition !== undefined && getPossition();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [position]);
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
   return (
     <>
-      {position !== null && (
+      {position !== {} && (
         <>
-          <TopNavbar currentUser={currentUser} />
+          <TopNavbar />
           <div className="up-main-container">
             <div className="up-top-container">
               <div
                 className="up-bg-container"
                 style={{ transform: `translate3d(${position.userBgImage})` }}
               >
-                <img src={currentUser.bgImage} className="up-bg-image" alt="" />
+                <img src={user.bgImage} className="up-bg-image" alt="" />
               </div>
               <div
                 className="up-user-container"
                 style={{ transform: `translate3d(${position.userInfo})` }}
               >
                 <div className="up-user-img-container">
-                  <img
-                    src={currentUser.userImage}
-                    className="up-user-image"
-                    alt=""
-                  />
+                  <img src={user.userImage} className="up-user-image" alt="" />
                 </div>
                 <div id="up-user-info" className="up-user-info">
                   <div className="up-user-name">
-                    {currentUser.name + " " + currentUser.surname}
+                    {user.name + " " + user.surname}
                   </div>
                   <div className="up-user-friends">150 Friends</div>
                 </div>
@@ -127,14 +144,21 @@ const UserProfile = () => {
 
             <div className="up-second-container">
               <div className="up-left-container">
-                <UserInfo currentUser={currentUser} />
-                <UserPhotos currentUser={currentUser} />
-                <UserFriends currentUser={currentUser} />
+                <UserInfo user={user} />
+                <UserPhotos user={user} />
+                <UserFriends user={user} />
               </div>
               <div className="up-right-container">
-                <NewPost currentUser={currentUser} />
-                {posts.map((post) => (
-                  <Post currentUser={currentUser} post={post} key={post._id} />
+                <NewPost user={user} />
+
+                {posts.map((post, i) => (
+                  <Post
+                    user={user}
+                    post={post}
+                    position={position}
+                    key={post._id}
+                    i={i}
+                  />
                 ))}
               </div>
             </div>

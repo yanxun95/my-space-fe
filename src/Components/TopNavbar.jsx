@@ -32,6 +32,7 @@ const TopNavbar = () => {
 
   const btnProfileImg = () => {
     history.push("/user/" + currentUser._id);
+    // window.location.reload(true);
   };
   return (
     <div className="top-navbar">
