@@ -42,7 +42,6 @@
   display: flex;
   align-items: center;
   width: 50%;
-  /* transform: translate3d(626px, 15px, 0px); */
 }
 
 .up-user-img-container {
@@ -84,9 +83,15 @@
 .up-left-container {
   min-width: 23.75rem;
   width: auto;
+  position: sticky;
+  top: 0;
 }
 
 .up-right-container {
   min-width: 23.75rem;
   width: auto;
+  padding-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

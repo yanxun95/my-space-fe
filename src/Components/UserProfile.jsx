@@ -2,13 +2,14 @@ import "../css/userProfile.css";
 import UserFriends from "./UserFriends.jsx";
 import UserInfo from "./UserInfo.jsx";
 import UserPhotos from "./UserPhotos.jsx";
-import Post from "./Post.jsx";
+import PostWithPosition from "./PostWithPosition.jsx";
 import NewPost from "./NewPost.jsx";
 import { useState, useEffect } from "react";
 import TopNavbar from "./TopNavbar.jsx";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Sortable from "sortablejs";
+import { Spinner } from "react-bootstrap";
 
 const UserProfile = () => {
   const { id } = useParams();
@@ -16,7 +17,7 @@ const UserProfile = () => {
   const [user, setUser] = useState({});
   const [posts, setPosts] = useState([]);
   const [position, setPosition] = useState({});
-  const [accessToken, setAccessToken] = useState(1);
+  const [accessToken, setAccessToken] = useState("");
 
   const loadPosition = async () => {
     try {
@@ -26,7 +27,6 @@ const UserProfile = () => {
       if (response.ok) {
         let result = await response.json();
         setPosition(result[0]);
-        // getPossition();
       } else {
         console.log("Error");
       }
@@ -115,10 +115,10 @@ const UserProfile = () => {
 
   return (
     <>
-      {position !== {} && (
-        <>
-          <TopNavbar />
-          <div className="up-main-container">
+      <TopNavbar />
+      <div className="up-main-container">
+        {position !== {} && (
+          <>
             <div className="up-top-container">
               <div
                 className="up-bg-container"
@@ -149,10 +149,10 @@ const UserProfile = () => {
                 <UserFriends user={user} />
               </div>
               <div className="up-right-container">
-                <NewPost user={user} />
+                <NewPost user={currentUser} />
 
                 {posts.map((post, i) => (
-                  <Post
+                  <PostWithPosition
                     user={user}
                     post={post}
                     position={position}
@@ -162,9 +162,9 @@ const UserProfile = () => {
                 ))}
               </div>
             </div>
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
     </>
   );
 };

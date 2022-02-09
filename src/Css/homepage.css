@@ -1,0 +1,11 @@
+.hp-main-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.hp-sec-container {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+}

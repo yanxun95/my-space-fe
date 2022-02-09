@@ -38,7 +38,7 @@ const TopNavbar = () => {
     <div className="top-navbar">
       <div className="top-navbar-left">
         <div>
-          <Link to={`/user/${currentUser._id}`}>
+          <Link to={`/homepage/`}>
             <MdWorkspacesOutline className="logo" />
           </Link>
         </div>

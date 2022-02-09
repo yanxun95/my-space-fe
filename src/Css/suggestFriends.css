@@ -1,0 +1,29 @@
+.sf-container {
+  width: 18.75rem;
+  height: auto;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  margin-left: 1rem;
+}
+
+.ud-btn-with-add-container {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  justify-content: space-between;
+}
+
+.ud-btn-with-add-container:hover {
+  background-color: #e4e6e9;
+}
+
+.ud-btn-add {
+  font-size: 1.5rem;
+  color: black;
+}
+
+.sf-font {
+  margin-bottom: 1rem;
+}

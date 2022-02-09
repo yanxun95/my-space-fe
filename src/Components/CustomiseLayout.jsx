@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { AiOutlineLike } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
 import { GoComment } from "react-icons/go";
-import { RiShareForwardLine } from "react-icons/ri";
+import { RiShareForwardLine, RiUnderline } from "react-icons/ri";
 import "../css/customiseLayout.css";
 import { gsap } from "gsap";
 import { Draggable } from "gsap/Draggable";
@@ -27,7 +28,8 @@ const CustomiseLayout = () => {
   const [accessToken, setAccessToken] = useState(" ");
   const currentUser = useSelector((state) => state.user.userInfo);
   const getUpdatePosition = useSelector((state) => state.user.position);
-  const [post, setPost] = useState(null);
+  const [post, setPost] = useState(undefined);
+
   const emptyPosition = {
     _id: getUpdatePosition._id,
     userId: getUpdatePosition.userId,
@@ -188,20 +190,17 @@ const CustomiseLayout = () => {
     if (accessToken !== " ") {
       loadPosition();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
 
   useEffect(() => {
-    if (post !== null && getUpdatePosition.mainPosition !== undefined) {
+    if (post !== undefined && getUpdatePosition.mainPosition !== undefined) {
       createUserInfoDrag();
       createDrag();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post, getUpdatePosition]);
 
   useEffect(() => {
     getPosts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -227,13 +226,15 @@ const CustomiseLayout = () => {
               >
                 <div className="up-user-img-container">
                   <img
-                    src="https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
+                    src={currentUser.userImage}
                     className="up-user-image"
                     alt=""
                   />
                 </div>
                 <div className="up-user-info">
-                  <div className="up-user-name">Username</div>
+                  <div className="up-user-name">
+                    {currentUser.name + " " + currentUser.surname}
+                  </div>
                   <div className="up-user-friends">Number of friends</div>
                 </div>
               </div>
@@ -247,7 +248,7 @@ const CustomiseLayout = () => {
                 </div>
               </div>
               <div className="up-right-container">
-                {post !== null && (
+                {post !== undefined && (
                   <div>
                     <NewPost user={currentUser} />
                     <div id="postContainer" className="post-container">
@@ -279,7 +280,9 @@ const CustomiseLayout = () => {
                       <div className="post-4container">
                         <div className="post-button-customise">
                           <AiOutlineLike className="post-icon-size" />
-                          <span>{post.likes}</span>
+                          <span className="post-like-no-font">
+                            {post.likes}
+                          </span>
                         </div>
                         <div className="post-function-bar-customise">
                           <div className="post-button-customise">

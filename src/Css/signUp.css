@@ -1,0 +1,49 @@
+.sp-main-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-form {
+  width: 35rem;
+  padding: 1rem;
+  border: 1px solid var(--border-grey);
+  border-radius: 0.5rem;
+  background-color: var(--white);
+  box-shadow: 0px 3px 8px -4px var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+}
+
+.sp-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.sp-form-small-container {
+  margin-bottom: 0.5rem;
+}
+
+.sp-birthday-font {
+  font-size: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.sp-terms {
+  font-size: 0.7rem;
+  margin: 0.5rem 0rem 1rem;
+  color: var(--box-shadow);
+}
+
+.sp-btn-submit-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.sp-btn-submit {
+  width: 50%;
+}

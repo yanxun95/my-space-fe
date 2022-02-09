@@ -5,6 +5,8 @@
   display: flex;
   flex-direction: column;
   margin-top: 1rem;
+  background-color: var(--white);
+  box-shadow: 0px 3px 8px -4px var(--box-shadow);
 }
 
 .post-user-image {
@@ -85,6 +87,8 @@
 
 .post-4container {
   padding: 0rem 1rem 0.2rem;
+  height: 5rem;
+  width: inherit;
 }
 
 .post-icon-size {
@@ -114,4 +118,14 @@
 
 .post-function-bar > div:hover {
   background-color: var(--border-grey);
+}
+
+.post-like-no-font {
+  font-size: 1rem;
+  width: 100%;
+  overflow: hidden;
+}
+
+.post-liked {
+  color: var(--blue);
 }

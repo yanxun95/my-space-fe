@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import "../css/post.css";
 import { BsThreeDots } from "react-icons/bs";
 import { AiOutlineLike } from "react-icons/ai";
@@ -7,14 +8,18 @@ import { useEffect, useState } from "react";
 import PostModal from "./PostModal.jsx";
 import Sortable from "sortablejs";
 import { GiConsoleController } from "react-icons/gi";
+import { useSelector } from "react-redux";
 
-const Post = ({ user, post, position, i }) => {
+const PostWithPosition = ({ user, post, position, i }) => {
   const [accessToken, setAccessToken] = useState(" ");
   const postDate = post.createdAt.split("T");
+  const currentUser = useSelector((state) => state.user.userInfo);
+
   const [modalShow, setModalShow] = useState(false);
 
   const getPossition = () => {
     let postContainer = document.querySelector(`.post-container.post${i}`);
+    console.log(position.postPosition);
     let sortable = Sortable.create(postContainer, {
       group: "postContainer",
       store: {
@@ -22,10 +27,38 @@ const Post = ({ user, post, position, i }) => {
           let order = position.postPosition;
           return order ? order.split("|") : [];
         },
+
+        set: function (sortable) {
+          let order = sortable.toArray();
+          console.log(order.join("|"));
+        },
       },
     });
-    let state = sortable.option("disabled");
-    sortable.option("disabled", !state);
+    // let state = sortable.option("disabled");
+    // sortable.option("disabled", !state);
+  };
+
+  const like = async (postId) => {
+    const userId = { userId: currentUser._id };
+    try {
+      const response = await fetch(
+        process.env.REACT_APP_BE_URL + `/post/${postId}/like`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + accessToken,
+          },
+          body: JSON.stringify(userId),
+        }
+      );
+      if (response.ok) {
+      } else {
+        console.log("error");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getToken = () => {
@@ -36,7 +69,6 @@ const Post = ({ user, post, position, i }) => {
 
   useEffect(() => {
     getToken();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken, user]);
 
   useEffect(() => {
@@ -69,7 +101,7 @@ const Post = ({ user, post, position, i }) => {
             <div className="post-4container">
               <div className="post-button">
                 <AiOutlineLike className="post-icon-size" />
-                <span>{post.likes}</span>
+                <span className="post-like-no-font">{post.likes}</span>
               </div>
               <div className="post-function-bar">
                 <div className="post-button">
@@ -95,4 +127,4 @@ const Post = ({ user, post, position, i }) => {
   );
 };
 
-export default Post;
+export default PostWithPosition;

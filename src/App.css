@@ -1,22 +1,13 @@
-.App {
-  text-align: center;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.main-container {
+  width: 100%;
+  height: 100%;
+  background-color: var(--main-bg-color);
 }
 
 .App-link {
@@ -33,14 +24,18 @@
 }
 
 :root {
+  --main-bg-color: rgb(240, 242, 245);
   --black: rgb(0, 0, 0);
+  --white: rgb(255, 255, 255);
+  --blue: rgb(0, 0, 255);
   --icon-grey: rgba(0, 0, 0, 0.6);
   --border-grey: rgba(0, 0, 0, 0.08);
   --search-bar: rgb(240, 242, 245);
   --search-bar-hover: rgb(228, 230, 233);
   --blue-text: rgb(33, 111, 219);
-  --logo-blue: #0a66c2;
-  --nav-dropdown-text: #050505;
-  --btn-login: #0a66c2;
-  --btn-login-hover: #004182;
+  --logo-blue: rgb(10, 102, 194);
+  --nav-dropdown-text: rgb(5, 5, 5);
+  --btn-login: rgb(10, 102, 194);
+  --btn-login-hover: rgb(0, 65, 130);
+  --box-shadow: rgb(102, 103, 105);
 }

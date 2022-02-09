@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import "../css/login.css";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -10,7 +10,8 @@ const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const btnUserLogin = async () => {
+  const btnUserLogin = async (e) => {
+    e.preventDefault();
     try {
       let response = await fetch(process.env.REACT_APP_BE_URL + "/user/login", {
         method: "POST",
@@ -22,8 +23,8 @@ const Login = () => {
       });
       if (response.ok) {
         let result = await response.json();
-        history.push("/user/" + result._id);
         dispatch(userLogin(result));
+        history.push("/homepage/");
       } else if (response.status === 401) {
         alert("Email or password is not correct!");
       } else {
@@ -34,13 +35,15 @@ const Login = () => {
     }
   };
 
-  const userSignUp = () => {};
+  const userSignUp = () => {
+    history.push("/signup/");
+  };
 
   return (
     <div className="login-main-container">
       <div className="login-form">
         <div className="login-title">Login</div>
-        <Form>
+        <Form onSubmit={(e) => btnUserLogin(e)}>
           <Form.Group controlId="formBasicEmail">
             <Form.Label className="login-form-label">Email address</Form.Label>
             <Form.Control
@@ -64,16 +67,16 @@ const Login = () => {
               }
             />
           </Form.Group>
-          <div
-            className="btn-login"
-            type="submit"
-            onClick={() => btnUserLogin()}
-          >
+          <Button className="btn-login" type="submit">
             Login
-          </div>
-          <div className="btn-login" type="button" onClick={() => userSignUp()}>
+          </Button>
+          <Button
+            className="btn-login"
+            type="button"
+            onClick={() => userSignUp()}
+          >
             Create new account
-          </div>
+          </Button>
         </Form>
       </div>
     </div>
