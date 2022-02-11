@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import "../css/userProfile.css";
 import UserFriends from "./UserFriends.jsx";
 import UserInfo from "./UserInfo.jsx";
@@ -93,7 +94,6 @@ const UserProfile = () => {
     if (accessToken !== " ") {
       loadPosition();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
 
   useEffect(() => {
@@ -101,12 +101,10 @@ const UserProfile = () => {
     loadUserProfile();
     getPossition();
     getPosts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {
     position.mainPosition !== undefined && getPossition();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [position]);
 
   useEffect(() => {
