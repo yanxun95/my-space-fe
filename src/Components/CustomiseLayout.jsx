@@ -20,6 +20,7 @@ import {
   updateUserInfoPosition,
   updatePostPosition,
   updateUserBgPosition,
+  updateUpLeftContainerPosition,
 } from "../actions";
 gsap.registerPlugin(Draggable);
 
@@ -37,6 +38,7 @@ const CustomiseLayout = () => {
     userBgImage: "0px, 0px, 0px",
     mainPosition: " ",
     postPosition: " ",
+    upLeftContainerPosition: " ",
   };
 
   const loadPosition = async () => {
@@ -51,6 +53,7 @@ const CustomiseLayout = () => {
           userId: result[0].userId,
           mainPosition: result[0].mainPosition,
           postPosition: result[0].postPosition,
+          upLeftContainerPosition: result[0].upLeftContainerPosition,
           userInfo: result[0].userInfo,
           userBgImage: result[0].userBgImage,
         };
@@ -148,6 +151,7 @@ const CustomiseLayout = () => {
   const createDrag = () => {
     let mainContainer = document.querySelector(".up-second-container");
     let postContainer = document.querySelector(".post-container");
+    let leftContainer = document.querySelector(".up-left-container");
     Sortable.create(mainContainer, {
       group: "mainContainer",
       store: {
@@ -174,6 +178,20 @@ const CustomiseLayout = () => {
         set: function (sortable) {
           let order = sortable.toArray();
           dispatch(updatePostPosition(order.join("|")));
+        },
+      },
+    });
+
+    Sortable.create(leftContainer, {
+      group: "leftContainer",
+      store: {
+        get: function (sortable) {
+          let order = getUpdatePosition.upLeftContainerPosition;
+          return order ? order.split("|") : [];
+        },
+        set: function (sortable) {
+          let order = sortable.toArray();
+          dispatch(updateUpLeftContainerPosition(order.join("|")));
         },
       },
     });
@@ -241,11 +259,9 @@ const CustomiseLayout = () => {
             </div>
             <div className="up-second-container">
               <div className="up-left-container">
-                <div>
-                  <UserInfo user={currentUser} />
-                  <UserPhotos user={currentUser} />
-                  <UserFriends user={currentUser} />
-                </div>
+                <UserInfo user={currentUser} />
+                <UserPhotos user={currentUser} />
+                <UserFriends user={currentUser} />
               </div>
               <div className="up-right-container">
                 {post !== undefined && (

@@ -7,7 +7,6 @@ import SuggestFriends from "./SuggestFriends";
 import PostWithoutPosition from "./PostWithoutPosition";
 
 const Homepage = () => {
-  const currentUser = useSelector((state) => state.user.userInfo);
   return (
     <>
       <TopNavbar />
@@ -15,7 +14,7 @@ const Homepage = () => {
         <div className="hp-sec-container">
           <UserSmallDashboard />
           <div className="up-right-container">
-            <NewPost user={currentUser} />
+            <NewPost />
             <PostWithoutPosition />
           </div>
           <SuggestFriends />

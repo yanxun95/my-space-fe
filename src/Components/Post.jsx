@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import "../css/post.css";
 import { BsThreeDots } from "react-icons/bs";
 import { AiOutlineLike } from "react-icons/ai";
@@ -8,13 +9,14 @@ import { useSelector } from "react-redux";
 
 import Comments from "./Comments";
 
-const Post = ({ post, index }) => {
+const Post = ({ post, index, loadPost }) => {
   const currentUser = useSelector((state) => state.user.userInfo);
   const [showComment, setShowComment] = useState(false);
   const [accessToken, setAccessToken] = useState(" ");
-  const [isLiked, setIsLiked] = useState([]);
+  const [isLiked, setIsLiked] = useState(false);
 
   const like = async (postId) => {
+    setIsLiked(!isLiked);
     const userId = { userId: currentUser._id };
     try {
       const response = await fetch(
@@ -29,6 +31,7 @@ const Post = ({ post, index }) => {
         }
       );
       if (response.ok) {
+        loadPost();
       } else {
         console.log("error");
       }
@@ -42,7 +45,7 @@ const Post = ({ post, index }) => {
       const response = await fetch(
         process.env.REACT_APP_BE_URL + `/like/${post._id}/${currentUser._id}`
       );
-      if (response.status === 302) {
+      if (response.ok) {
         let result = await response.json();
         setIsLiked(result);
       } else {
@@ -56,17 +59,11 @@ const Post = ({ post, index }) => {
   const likedPost = () => {
     const btnLike = document.getElementById(`postLikeLogo${index}`);
 
-    if (isLiked.length === 0) {
-      btnLike.classList.remove("post-liked");
-    } else {
+    if (isLiked) {
       btnLike.classList.add("post-liked");
+    } else {
+      btnLike.classList.remove("post-liked");
     }
-  };
-
-  const changeLike = () => {
-    console.log("changeLike");
-    isLiked.length === 0 ? post.likes++ : post.likes--;
-    console.log(post.likes);
   };
 
   const displayComments = () => {
@@ -87,7 +84,7 @@ const Post = ({ post, index }) => {
 
   useEffect(() => {
     likedPost();
-  }, [isLiked.length]);
+  }, [isLiked]);
 
   return (
     <>
@@ -114,9 +111,14 @@ const Post = ({ post, index }) => {
           <div className="post-scontainer">
             <span>{post.content}</span>
           </div>
-          <div className="post-3container">
-            <img src={post.img} alt="" className="post-img" />
-          </div>
+          {post.img.length !== 0 ? (
+            <div className="post-3container">
+              <img src={post.img} alt="" className="post-img" />
+            </div>
+          ) : (
+            <></>
+          )}
+
           <div className="post-4container">
             <div id={`postLikeLogo${index}`} className="post-button">
               <AiOutlineLike className="post-icon-size" />

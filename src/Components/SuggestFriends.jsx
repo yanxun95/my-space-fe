@@ -4,10 +4,12 @@ import { useState } from "react";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import "../css/suggestFriends.css";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const SuggestFriends = () => {
   const currentUser = useSelector((state) => state.user.userInfo);
   const [friends, setFriends] = useState([]);
+  const history = useHistory();
 
   const loadSuggestFriends = async () => {
     try {
@@ -27,6 +29,10 @@ const SuggestFriends = () => {
     }
   };
 
+  const loadNewUser = (userID) => {
+    history.push(`/user/${userID}`);
+  };
+
   useEffect(() => {
     loadSuggestFriends();
   }, []);
@@ -36,7 +42,11 @@ const SuggestFriends = () => {
       <div className="ud-sec-container">
         <div className="sf-font">Suggest Friends</div>
         {friends.map((friend) => (
-          <div key={friend._id} className="ud-btn-with-add-container">
+          <div
+            key={friend._id}
+            className="ud-btn-with-add-container"
+            onClick={() => loadNewUser(friend._id)}
+          >
             <div>
               <img src={friend.userImage} alt="" className="ud-user-image " />
               <span>{friend.name + " " + friend.surname}</span>

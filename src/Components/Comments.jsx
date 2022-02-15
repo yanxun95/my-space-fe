@@ -28,27 +28,28 @@ const Comments = ({ postId }) => {
 
   const postComment = async (e) => {
     e.preventDefault();
-    console.log(newComments);
-    // try {
-    //   const response = await fetch(
-    //     process.env.REACT_APP_BE_URL +
-    //       `/post/${postId}/${currentUser._id}/comment`,
-    //     {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: "Bearer " + accessToken,
-    //       },
-    //       body: JSON.stringify(newComments),
-    //     }
-    //   );
-    //   if (response.ok) {
-    //   } else {
-    //     alert("Error");
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const response = await fetch(
+        process.env.REACT_APP_BE_URL +
+          `/post/${postId}/${currentUser._id}/comment`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + accessToken,
+          },
+          body: JSON.stringify(newComments),
+        }
+      );
+      if (response.ok) {
+        getCommentsById();
+        document.getElementById("newComment").value = "";
+      } else {
+        alert("Error");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getToken = () => {

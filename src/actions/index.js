@@ -2,6 +2,8 @@ export const USER_LOGIN = "USER_LOGIN";
 export const SET_POSITION = "SET_POSITION";
 export const UPDATE_MAIN_POSITION = "UPDATE_MAIN_POSITION";
 export const UPDATE_POST_POSITION = "UPDATE_POST_POSITION";
+export const UPDATE_UPLEFTCONTAINER_POSITION =
+  "UPDATE_UPLEFTCONTAINER_POSITION";
 export const UPDATE_USERINFO_POSITION = "UPDATE_USERINFO_POSITION";
 export const UPDATE_USERBG_POSITION = "UPDATE_USERBG_POSITION";
 
@@ -22,6 +24,11 @@ export const updateMainPosition = (pos) => ({
 
 export const updatePostPosition = (pos) => ({
   type: UPDATE_POST_POSITION,
+  payload: pos,
+});
+
+export const updateUpLeftContainerPosition = (pos) => ({
+  type: UPDATE_UPLEFTCONTAINER_POSITION,
   payload: pos,
 });
 

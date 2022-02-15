@@ -3,6 +3,7 @@ import {
   SET_POSITION,
   UPDATE_MAIN_POSITION,
   UPDATE_POST_POSITION,
+  UPDATE_UPLEFTCONTAINER_POSITION,
   UPDATE_USERINFO_POSITION,
   UPDATE_USERBG_POSITION,
 } from "../actions";
@@ -32,6 +33,15 @@ const userReducer = (state = initialState.user, action) => {
       return {
         ...state,
         position: { ...state.position, postPosition: action.payload },
+      };
+    }
+    case UPDATE_UPLEFTCONTAINER_POSITION: {
+      return {
+        ...state,
+        position: {
+          ...state.position,
+          upLeftContainerPosition: action.payload,
+        },
       };
     }
     case UPDATE_USERINFO_POSITION: {

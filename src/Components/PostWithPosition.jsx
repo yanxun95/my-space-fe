@@ -19,7 +19,6 @@ const PostWithPosition = ({ user, post, position, i }) => {
 
   const getPossition = () => {
     let postContainer = document.querySelector(`.post-container.post${i}`);
-    console.log(position.postPosition);
     let sortable = Sortable.create(postContainer, {
       group: "postContainer",
       store: {

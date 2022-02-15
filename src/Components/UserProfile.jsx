@@ -60,7 +60,9 @@ const UserProfile = () => {
 
   const getPossition = () => {
     let mainContainer = document.querySelector(".up-second-container");
-    let sortable = Sortable.create(mainContainer, {
+    let leftContainer = document.querySelector(".up-left-container");
+
+    let mainContainerSortable = Sortable.create(mainContainer, {
       group: "mainContainer",
       store: {
         get: function (sortable) {
@@ -69,8 +71,21 @@ const UserProfile = () => {
         },
       },
     });
-    let state = sortable.option("disabled");
-    sortable.option("disabled", !state);
+    let mainContainerState = mainContainerSortable.option("disabled");
+    mainContainerSortable.option("disabled", !mainContainerState);
+
+    let upLeftContainerSortable = Sortable.create(leftContainer, {
+      group: "leftContainer",
+      store: {
+        get: function (sortable) {
+          let order = position.upLeftContainerPosition;
+          return order ? order.split("|") : [];
+        },
+      },
+    });
+
+    let upLeftContainerState = upLeftContainerSortable.option("disabled");
+    upLeftContainerSortable.option("disabled", !upLeftContainerState);
   };
 
   const loadUserProfile = async () => {

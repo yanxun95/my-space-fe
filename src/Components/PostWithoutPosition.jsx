@@ -14,12 +14,12 @@ const PostWithoutPosition = () => {
   const [accessToken, setAccessToken] = useState(" ");
   const [showComment, setShowComment] = useState(false);
 
-  const loadposts = async () => {
+  const loadPost = async () => {
     try {
       const response = await fetch(process.env.REACT_APP_BE_URL + "/post/");
       if (response.ok) {
         let result = await response.json();
-        setPosts(result);
+        setPosts(result.reverse());
       } else {
         console.log("Error");
       }
@@ -36,7 +36,7 @@ const PostWithoutPosition = () => {
 
   useEffect(() => {
     getToken();
-    loadposts();
+    loadPost();
   }, []);
 
   return (
@@ -44,7 +44,14 @@ const PostWithoutPosition = () => {
       {posts.length === 0 ? (
         <Spinner animation="border" variant="primary" />
       ) : (
-        posts.map((post, i) => <Post key={post._id} post={post} index={i} />)
+        posts.map((post, i) => (
+          <Post
+            key={post._id}
+            post={post}
+            index={i}
+            loadPost={() => loadPost()}
+          />
+        ))
       )}
     </>
   );
