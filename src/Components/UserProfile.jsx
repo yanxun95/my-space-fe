@@ -3,7 +3,7 @@ import "../css/userProfile.css";
 import UserFriends from "./UserFriends.jsx";
 import UserInfo from "./UserInfo.jsx";
 import UserPhotos from "./UserPhotos.jsx";
-import PostWithPosition from "./PostWithPosition.jsx";
+import UserProfilePost from "./UserProfilePost.jsx";
 import NewPost from "./NewPost.jsx";
 import { useState, useEffect } from "react";
 import TopNavbar from "./TopNavbar.jsx";
@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Sortable from "sortablejs";
 import { Spinner } from "react-bootstrap";
+import Post from "./Post";
 
 const UserProfile = () => {
   const { id } = useParams();
@@ -83,7 +84,6 @@ const UserProfile = () => {
         },
       },
     });
-
     let upLeftContainerState = upLeftContainerSortable.option("disabled");
     upLeftContainerSortable.option("disabled", !upLeftContainerState);
   };
@@ -165,12 +165,12 @@ const UserProfile = () => {
                 <NewPost user={currentUser} />
 
                 {posts.map((post, i) => (
-                  <PostWithPosition
+                  <UserProfilePost
+                    key={post._id}
                     user={user}
                     post={post}
+                    index={i}
                     position={position}
-                    key={post._id}
-                    i={i}
                   />
                 ))}
               </div>

@@ -22,6 +22,7 @@ import {
   updateUserBgPosition,
   updateUpLeftContainerPosition,
 } from "../actions";
+import { useHistory } from "react-router-dom";
 gsap.registerPlugin(Draggable);
 
 const CustomiseLayout = () => {
@@ -30,6 +31,7 @@ const CustomiseLayout = () => {
   const currentUser = useSelector((state) => state.user.userInfo);
   const getUpdatePosition = useSelector((state) => state.user.position);
   const [post, setPost] = useState(undefined);
+  const history = useHistory();
 
   const emptyPosition = {
     _id: getUpdatePosition._id,
@@ -122,7 +124,8 @@ const CustomiseLayout = () => {
       if (response.ok) {
         alert("Layout has been reset!");
         //check the refresh
-        window.location.reload(true);
+        // window.location.reload(true);
+        history.push(`/user/${currentUser._id}`);
       } else {
         alert("Error");
       }
@@ -163,6 +166,7 @@ const CustomiseLayout = () => {
         set: function (sortable) {
           let order = sortable.toArray();
           dispatch(updateMainPosition(order.join("|")));
+          console.log(order);
         },
       },
     });

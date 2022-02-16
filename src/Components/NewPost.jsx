@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useSelector } from "react-redux";
 
-const NewPost = () => {
+const NewPost = ({ post, loadPost }) => {
   const currentUser = useSelector((state) => state.user.userInfo);
   const [show, setShow] = useState(false);
   const [accessToken, setAccessToken] = useState("");
@@ -30,6 +30,7 @@ const NewPost = () => {
       if (response.ok) {
         alert("Post has been post.");
         handleClose();
+        loadPost();
       } else {
         alert("Error");
       }

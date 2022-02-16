@@ -10,7 +10,7 @@ import Sortable from "sortablejs";
 import { GiConsoleController } from "react-icons/gi";
 import { useSelector } from "react-redux";
 
-const PostWithPosition = ({ user, post, position, i }) => {
+const UserProfilePost = ({ user, post, position, index }) => {
   const [accessToken, setAccessToken] = useState(" ");
   const postDate = post.createdAt.split("T");
   const currentUser = useSelector((state) => state.user.userInfo);
@@ -18,7 +18,7 @@ const PostWithPosition = ({ user, post, position, i }) => {
   const [modalShow, setModalShow] = useState(false);
 
   const getPossition = () => {
-    let postContainer = document.querySelector(`.post-container.post${i}`);
+    let postContainer = document.getElementById(`post-container${index}`);
     let sortable = Sortable.create(postContainer, {
       group: "postContainer",
       store: {
@@ -26,15 +26,10 @@ const PostWithPosition = ({ user, post, position, i }) => {
           let order = position.postPosition;
           return order ? order.split("|") : [];
         },
-
-        set: function (sortable) {
-          let order = sortable.toArray();
-          console.log(order.join("|"));
-        },
       },
     });
-    // let state = sortable.option("disabled");
-    // sortable.option("disabled", !state);
+    let state = sortable.option("disabled");
+    sortable.option("disabled", !state);
   };
 
   const like = async (postId) => {
@@ -78,7 +73,7 @@ const PostWithPosition = ({ user, post, position, i }) => {
     <>
       {position !== null && (
         <>
-          <div id="post-container" className={`post-container post${i}`}>
+          <div id={`post-container${index}`} className="post-container">
             <div className="post-fcontainer">
               <div className="post-user-info-container">
                 <img src={user.userImage} alt="" className="post-user-image" />
@@ -94,9 +89,13 @@ const PostWithPosition = ({ user, post, position, i }) => {
             <div className="post-scontainer">
               <span>{post.content}</span>
             </div>
-            <div className="post-3container">
-              <img src={post.img} alt="" className="post-img" />
-            </div>
+            {post.img.length !== 0 ? (
+              <div className="post-3container">
+                <img src={post.img} alt="" className="post-img" />
+              </div>
+            ) : (
+              <></>
+            )}
             <div className="post-4container">
               <div className="post-button">
                 <AiOutlineLike className="post-icon-size" />
@@ -126,4 +125,4 @@ const PostWithPosition = ({ user, post, position, i }) => {
   );
 };
 
-export default PostWithPosition;
+export default UserProfilePost;
